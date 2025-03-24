@@ -1,0 +1,9 @@
+[versions]
+kaml = "0.67.0"
+twitch4j = "1.24.0"
+surf-database = "1.0.4-SNAPSHOT"
+
+[libraries]
+kaml = { module = "com.charleskorn.kaml:kaml-jvm", version.ref = "kaml" }
+twitch4j = { module = "com.github.twitch4j:twitch4j", version.ref = "twitch4j" }
+surf-database = { module = "dev.slne.surf:surf-database", version.ref = "surf-database" }
