@@ -1,6 +1,6 @@
-package dev.slne.surf.content.creator.api.plattform
+package dev.slne.surf.content.creator.api.platform
 
-enum class PlattformState {
+enum class PlatformState {
 
     /**
      * The plattform is online.

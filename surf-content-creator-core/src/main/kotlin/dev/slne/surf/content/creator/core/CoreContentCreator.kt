@@ -1,37 +1,33 @@
 package dev.slne.surf.content.creator.core
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import dev.slne.surf.content.creator.api.ContentCreator
-import dev.slne.surf.content.creator.api.ContentCreatorPlattform
-import dev.slne.surf.content.creator.api.plattform.PlattformState
-import dev.slne.surf.content.creator.api.plattform.PlattformType
+import dev.slne.surf.content.creator.api.ContentCreatorPlatform
+import dev.slne.surf.content.creator.api.platform.PlatformType
+import dev.slne.surf.content.creator.api.toPlattform
 import java.util.*
 
 data class CoreContentCreator(
-    override val name: String,
     override val minecraftUuid: UUID,
-
-    val youtubeName: String?,
-    val twitchName: String?
 ) : ContentCreator {
+    private val platforms = Caffeine.newBuilder()
+        .build<PlatformType, ContentCreatorPlatform?> {
+            when(it) {
+                PlatformType.TWITCH -> twitchName?.let { PlatformType.TWITCH.toPlattform(it.lowercase()) }
+                else -> null
+            }
+        }
 
-    override val twitch = twitchName?.let {
-        ContentCreatorPlattform(
-            name = it,
-            plattform = PlattformType.TWITCH,
-            state = PlattformState.UNKNOWN
-        )
-    }
+    var twitchName: String? = null
+        set(value) {
+            field = value
+            platforms.put(PlatformType.TWITCH, value?.let { PlatformType.TWITCH.toPlattform(it.lowercase()) })
+        }
 
-    override val youtube = youtubeName?.let {
-        ContentCreatorPlattform(
-            name = it,
-            plattform = PlattformType.YOUTUBE,
-            state = PlattformState.UNKNOWN
-        )
-    }
+
+    override fun getPlatform(type: PlatformType): ContentCreatorPlatform? = platforms.get(type)
 
     override fun toString(): String {
-        return "CoreContentCreator(name='$name', youtubeName=$youtubeName, twitchName=$twitchName, twitch=$twitch, youtube=$youtube)"
+        return "CoreContentCreator(minecraftUuid=$minecraftUuid, twitchName=$twitchName)"
     }
-
 }

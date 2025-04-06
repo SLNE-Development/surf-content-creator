@@ -1,8 +1,8 @@
 package dev.slne.surf.content.creator.core
 
-import dev.slne.surf.content.creator.api.ContentCreatorPlattform
+import dev.slne.surf.content.creator.api.ContentCreatorPlatform
 import dev.slne.surf.content.creator.api.listener.StateChangeListener
-import dev.slne.surf.content.creator.api.plattform.PlattformState
+import dev.slne.surf.content.creator.api.platform.PlatformState
 import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
 
 object ContentCreatorInstance {
@@ -14,10 +14,10 @@ object ContentCreatorInstance {
     }
 
     fun callOnStateChangeListener(
-        contentCreatorPlattform: ContentCreatorPlattform,
-        newState: PlattformState
+        contentCreatorPlatform: ContentCreatorPlatform,
+        newState: PlatformState
     ) {
-        stateChangeListeners.forEach { it.onStateChanged(contentCreatorPlattform, newState) }
+        stateChangeListeners.forEach { it.onStateChanged(contentCreatorPlatform, newState) }
     }
 
 }

@@ -1,6 +1,6 @@
-package dev.slne.surf.content.creator.api.plattform
+package dev.slne.surf.content.creator.api.platform
 
-enum class PlattformType {
+enum class PlatformType {
     /**
      * YouTube
      */

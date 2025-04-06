@@ -14,7 +14,6 @@ velocityPluginFile {
 
     pluginDependencies {
         register("surf-api-velocity")
-        register("surf-data-velocity")
         register("commandapi")
         register("tab")
     }

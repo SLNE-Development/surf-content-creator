@@ -1,7 +1,7 @@
 [versions]
 kaml = "0.67.0"
 twitch4j = "1.24.0"
-surf-database = "1.0.4-SNAPSHOT"
+surf-database = "1.0.5-SNAPSHOT"
 
 [libraries]
 kaml = { module = "com.charleskorn.kaml:kaml-jvm", version.ref = "kaml" }
