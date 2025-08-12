@@ -26,9 +26,18 @@ object ContentClientManager {
         enableStreamEventListener(contentCreators)
     }
 
+    suspend fun enableStreamEventListener(uuid: UUID) {
+        val contentCreator = contentCreatorService.getContentCreator(uuid) ?: return
+        enableStreamEventListener(contentCreator)
+    }
+
     @JvmName("enableStreamEventListenerContentCreators")
     suspend fun enableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>) {
         clients.forEach { it.enableStreamEventListener(contentCreators) }
+    }
+
+    suspend fun enableStreamEventListener(contentCreator: ContentCreator) {
+        clients.forEach { it.enableStreamEventListener(contentCreator) }
     }
 
     @JvmName("disableStreamEventListenerUUIDs")
@@ -40,5 +49,14 @@ object ContentClientManager {
     @JvmName("disableStreamEventListenerContentCreators")
     suspend fun disableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>) {
         clients.forEach { it.disableStreamEventListener(contentCreators) }
+    }
+
+    suspend fun disableStreamEventListener(uuid: UUID) {
+        val contentCreator = contentCreatorService.getContentCreator(uuid) ?: return
+        disableStreamEventListener(contentCreator)
+    }
+
+    suspend fun disableStreamEventListener(contentCreator: ContentCreator) {
+        clients.forEach { it.disableStreamEventListener(contentCreator) }
     }
 }

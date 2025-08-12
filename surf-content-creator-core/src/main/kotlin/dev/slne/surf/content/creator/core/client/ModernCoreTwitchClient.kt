@@ -5,6 +5,7 @@ import com.github.twitch4j.TwitchClientBuilder
 import com.github.twitch4j.events.ChannelGoLiveEvent
 import com.github.twitch4j.events.ChannelGoOfflineEvent
 import com.github.twitch4j.helix.domain.Stream
+import com.netflix.hystrix.exception.HystrixRuntimeException
 import dev.slne.surf.content.creator.api.ContentCreator
 import dev.slne.surf.content.creator.api.platform.PlatformType
 import dev.slne.surf.content.creator.core.config.config
@@ -67,6 +68,26 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
         }
     }
 
+    override suspend fun enableStreamEventListener(contentCreator: ContentCreator) {
+        val channelName = contentCreator.getPlatform(PlatformType.TWITCH)?.name ?: return
+
+        try {
+            twitchClient.clientHelper.enableStreamEventListener(channelName)
+        } catch (e: HystrixRuntimeException) {
+            if (e.failureType != HystrixRuntimeException.FailureType.BAD_REQUEST_EXCEPTION) {
+                throw e
+            }
+
+            log.atWarning()
+                .log("Failed to enable stream event listener for channel: $channelName. " +
+                        "This is likely due to a bad request, possibly an invalid channel name.")
+            return
+        }
+
+        updateStreamers(ObjectSet.of(contentCreator))
+
+    }
+
     override suspend fun enableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>) {
         val channelNames = contentCreators.mapNotNull {
             it.getPlatform(
@@ -82,6 +103,25 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
         }
 
         updateStreamers(contentCreators)
+    }
+
+    override suspend fun disableStreamEventListener(contentCreator: ContentCreator) {
+        val channelName = contentCreator.getPlatform(PlatformType.TWITCH)?.name ?: return
+
+        try {
+            twitchClient.clientHelper.disableStreamEventListener(channelName)
+        } catch (e: HystrixRuntimeException) {
+            if (e.failureType != HystrixRuntimeException.FailureType.BAD_REQUEST_EXCEPTION) {
+                throw e
+            }
+
+            log.atWarning()
+                .log("Failed to disable stream event listener for channel: $channelName. " +
+                        "This is likely due to a bad request, possibly an invalid channel name.")
+            return
+        }
+
+        updateStreamers(ObjectSet.of(contentCreator))
     }
 
     override suspend fun disableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>) {
@@ -117,7 +157,7 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
 
                 // We need to map the ids to names because the Twitch API returns the userId, not the name
                 // and we need to use the name to update the content creator state
-                val idToName = users.associate { it.id to it.login}
+                val idToName = users.associate { it.id to it.login }
 
                 val streamResponse = twitchClient.helix
                     .getStreams(null, null, null, BATCH_SIZE, null, null, users.map { it.id }, null)

@@ -5,16 +5,15 @@ plugins {
 dependencies {
     api(project(":surf-content-creator-core"))
     api(project(":surf-content-creator-fallback"))
-    
-    compileOnly("com.github.NEZNAMY:TAB-API:5.0.4")
+
+    compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.3.0")
 }
 
 velocityPluginFile {
     main = "dev.slne.surf.content.creator.velocity.VelocityContentCreatorPlugin"
 
     pluginDependencies {
-        register("surf-api-velocity")
         register("commandapi")
-        register("tab")
+        register("miniplaceholders")
     }
 }

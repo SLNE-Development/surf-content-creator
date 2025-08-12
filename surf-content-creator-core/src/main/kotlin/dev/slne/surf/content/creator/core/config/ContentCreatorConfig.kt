@@ -8,7 +8,7 @@ import kotlin.time.Duration.Companion.minutes
 
 @ConfigSerializable
 data class ContentCreatorConfig(
-    val liveTag: String = "§c●§r",
+    val liveTag: String = "<red>●</red>",
     val twitch: Twitch = Twitch(),
 ) {
     @ConfigSerializable

@@ -19,7 +19,9 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
 
     abstract suspend fun build(pluginScope: CoroutineScope)
     abstract fun registerStateChangeListener()
+    abstract suspend fun enableStreamEventListener(contentCreator: ContentCreator)
     abstract suspend fun enableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>)
+    abstract suspend fun disableStreamEventListener(contentCreator: ContentCreator)
     abstract suspend fun disableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>)
 
     protected fun channelGoLive(channelName: String) {
