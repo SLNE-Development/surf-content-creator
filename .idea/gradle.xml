@@ -5,13 +5,14 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="gradleHome" value="C:\Gradle\gradle-8.13" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/surf-content-creator-api" />
             <option value="$PROJECT_DIR$/surf-content-creator-core" />
             <option value="$PROJECT_DIR$/surf-content-creator-fallback" />
+            <option value="$PROJECT_DIR$/surf-content-creator-placeholder" />
             <option value="$PROJECT_DIR$/surf-content-creator-velocity" />
           </set>
         </option>

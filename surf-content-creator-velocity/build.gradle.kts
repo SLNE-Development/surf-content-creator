@@ -5,12 +5,12 @@ plugins {
 dependencies {
     api(project(":surf-content-creator-core"))
     api(project(":surf-content-creator-fallback"))
-
-    compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.3.0")
 }
 
 velocityPluginFile {
     main = "dev.slne.surf.content.creator.velocity.VelocityContentCreatorPlugin"
+
+    authors = listOf("Ammo", "red")
 
     pluginDependencies {
         register("commandapi")

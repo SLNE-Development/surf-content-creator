@@ -27,7 +27,7 @@ val plugin get() = VelocityContentCreatorPlugin.instance
 
 class VelocityContentCreatorPlugin @Inject constructor(
     val server: ProxyServer,
-    @DataDirectory val dataPath: Path,
+    @param:DataDirectory val dataPath: Path,
     suspendingPluginContainer: SuspendingPluginContainer
 ) {
 
