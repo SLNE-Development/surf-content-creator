@@ -10,5 +10,9 @@ surfPaperPluginApi  {
     mainClass("dev.slne.surf.content.creator.paper.PaperMain")
     generateLibraryLoader(false)
 
+    serverDependencies {
+        register("surf-social-paper")
+    }
+
     authors.addAll("twisti", "red")
 }
