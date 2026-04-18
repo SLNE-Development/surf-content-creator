@@ -4,6 +4,7 @@ import dev.slne.surf.api.core.util.mutableObjectSetOf
 import dev.slne.surf.content.creator.api.ContentCreatorPlatform
 import dev.slne.surf.content.creator.api.listener.StateChangeListener
 import dev.slne.surf.content.creator.api.platform.PlatformState
+import java.util.UUID
 
 object ContentCreatorInstance {
 
@@ -14,10 +15,11 @@ object ContentCreatorInstance {
     }
 
     fun callOnStateChangeListener(
+        playerUuid: UUID,
         contentCreatorPlatform: ContentCreatorPlatform,
         newState: PlatformState
     ) {
-        stateChangeListeners.forEach { it.onStateChanged(contentCreatorPlatform, newState) }
+        stateChangeListeners.forEach { it.onStateChanged(playerUuid, contentCreatorPlatform, newState) }
     }
 
 }

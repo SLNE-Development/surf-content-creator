@@ -24,9 +24,10 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
     abstract suspend fun disableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>)
 
     protected fun channelGoLive(channelName: String) {
-        val platform = ContentCreatorService.contentCreators
-            .mapNotNull { it.getPlatform(platformType) }
-            .find { it.name.equals(channelName, ignoreCase = true) }
+        val contentCreator = ContentCreatorService.contentCreators.find { creator ->
+            creator.getPlatform(platformType)?.name.equals(channelName, ignoreCase = true)
+        }
+        val platform = contentCreator?.getPlatform(platformType)
 
         if (platform == null) {
             log.atWarning()
@@ -34,14 +35,15 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
             return
         }
 
-        ContentCreatorInstance.callOnStateChangeListener(platform, PlatformState.ONLINE)
+        ContentCreatorInstance.callOnStateChangeListener(contentCreator.minecraftUuid, platform, PlatformState.ONLINE)
         platform.state = PlatformState.ONLINE
     }
 
     protected fun channelGoOffline(channelName: String) {
-        val platform = ContentCreatorService.contentCreators
-            .mapNotNull { it.getPlatform(platformType) }
-            .find { it.name.equals(channelName, ignoreCase = true) }
+        val contentCreator = ContentCreatorService.contentCreators.find { creator ->
+            creator.getPlatform(platformType)?.name.equals(channelName, ignoreCase = true)
+        }
+        val platform = contentCreator?.getPlatform(platformType)
 
         if (platform == null) {
             log.atWarning()
@@ -49,7 +51,7 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
             return
         }
 
-        ContentCreatorInstance.callOnStateChangeListener(platform, PlatformState.OFFLINE)
+        ContentCreatorInstance.callOnStateChangeListener(contentCreator.minecraftUuid, platform, PlatformState.OFFLINE)
         platform.state = PlatformState.OFFLINE
     }
 
