@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import dev.slne.surf.api.gradle.util.slneReleases
 
 buildscript {
@@ -24,5 +25,9 @@ subprojects {
                 }
             }
         }
+    }
+
+    tasks.withType<ShadowJar> {
+        exclude("kotlin/**")
     }
 }
