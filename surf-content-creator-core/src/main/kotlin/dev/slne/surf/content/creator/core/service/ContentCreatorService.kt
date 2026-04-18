@@ -4,7 +4,10 @@ import com.github.benmanes.caffeine.cache.Caffeine
 import dev.slne.surf.api.core.util.mutableObjectSetOf
 import dev.slne.surf.api.core.util.toObjectSet
 import dev.slne.surf.content.creator.api.ContentCreator
+import dev.slne.surf.content.creator.api.platform.PlatformState
+import dev.slne.surf.content.creator.api.platform.PlatformType
 import dev.slne.surf.content.creator.core.CoreContentCreator
+import dev.slne.surf.content.creator.core.client.ModernCoreTwitchClient
 import dev.slne.surf.social.api.SurfSocialApi
 import dev.slne.surf.social.api.connection.impl.TwitchConnection
 import dev.slne.surf.social.api.findConnection
@@ -16,9 +19,15 @@ object ContentCreatorService {
     val contentCreators get() = coreCreators.asMap().values.toObjectSet<ContentCreator>()
 
     suspend fun cacheCreator(playerUuid: UUID) = SurfSocialApi.findConnection<TwitchConnection>(playerUuid)?.let {
-        coreCreators.put(playerUuid, CoreContentCreator(playerUuid).also { c ->
+        val creator = CoreContentCreator(playerUuid).also { c ->
             c.twitchName = it.twitchName
-        })
+        }
+
+        coreCreators.put(playerUuid, creator)
+
+        PlatformType.entries.mapNotNull { type -> creator.getPlatform(type) }.filter { it.state == PlatformState.ONLINE }.forEach { platform ->
+            ModernCoreTwitchClient.channelGoLive(platform.name)
+        }
     }
 
     fun invalidate(playerUuid: UUID) {

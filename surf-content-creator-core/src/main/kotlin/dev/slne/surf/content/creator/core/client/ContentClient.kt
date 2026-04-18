@@ -23,7 +23,7 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
     abstract suspend fun disableStreamEventListener(contentCreator: ContentCreator)
     abstract suspend fun disableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>)
 
-    protected fun channelGoLive(channelName: String) {
+    fun channelGoLive(channelName: String) {
         val contentCreator = ContentCreatorService.contentCreators.find { creator ->
             creator.getPlatform(platformType)?.name.equals(channelName, ignoreCase = true)
         }
