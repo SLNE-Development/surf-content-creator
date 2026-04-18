@@ -9,6 +9,7 @@ dependencies {
 surfPaperPluginApi  {
     mainClass("dev.slne.surf.content.creator.paper.PaperMain")
     generateLibraryLoader(false)
+    foliaSupported(true)
 
     serverDependencies {
         register("surf-social-paper")
