@@ -4,40 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="24abc730-e438-4fd8-bd86-5c469a5eb2d4" name="Changes" comment="feat: starting cleanup">
-      <change afterPath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/paper/api/PaperContentCreatorApi.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/paper/listener/PlayerConnectionListener.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="24abc730-e438-4fd8-bd86-5c469a5eb2d4" name="Changes" comment="feat: add server dependency for surf-social-paper in build configuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-api/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-api/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-api/src/main/kotlin/dev/slne/surf/content/creator/api/ContentCreatorApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-api/src/main/kotlin/dev/slne/surf/content/creator/api/ContentCreatorApi.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-api/src/main/kotlin/dev/slne/surf/content/creator/api/platform/PlatformType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-api/src/main/kotlin/dev/slne/surf/content/creator/api/platform/PlatformType.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/ContentCreatorInstance.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/ContentCreatorInstance.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/CoreContentCreator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/CoreContentCreator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ContentClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ContentClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ContentClientManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ContentClientManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ModernCoreTwitchClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ModernCoreTwitchClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/config/ContentCreatorConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/config/ContentCreatorConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/service/ContentCreatorService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/service/ContentCreatorService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-fallback/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-fallback/src/main/kotlin/dev/slne/surf/content/creator/fallback/FallbackContentCreator.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-fallback/src/main/kotlin/dev/slne/surf/content/creator/fallback/FallbackContentCreatorService.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-fallback/src/main/kotlin/dev/slne/surf/content/creator/fallback/FallbackContentCreatorTable.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-placeholder/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-velocity/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/PlaceholderManager.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/VelocityContentCreatorApi.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/VelocityContentCreatorPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/paper/PaperMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/content-creator-utils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-paper/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/paper/PaperMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-paper/src/main/kotlin/dev/slne/surf/content/creator/paper/PaperMain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/paper/api/PaperContentCreatorApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-paper/src/main/kotlin/dev/slne/surf/content/creator/paper/api/PaperContentCreatorApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/paper/listener/PlayerConnectionListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-paper/src/main/kotlin/dev/slne/surf/content/creator/paper/listener/PlayerConnectionListener.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -446,7 +419,23 @@
       <option name="project" value="LOCAL" />
       <updated>1766660832343</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: update plugin IDs and dependencies for API integration">
+      <option name="closed" value="true" />
+      <created>1776546369436</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776546369436</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: add server dependency for surf-social-paper in build configuration">
+      <option name="closed" value="true" />
+      <created>1776546382569</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1776546382569</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -454,7 +443,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: starting cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: starting cleanup" />
+    <MESSAGE value="feat: update plugin IDs and dependencies for API integration" />
+    <MESSAGE value="feat: add server dependency for surf-social-paper in build configuration" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add server dependency for surf-social-paper in build configuration" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

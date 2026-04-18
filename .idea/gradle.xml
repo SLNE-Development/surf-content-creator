@@ -11,7 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/surf-content-creator-api" />
             <option value="$PROJECT_DIR$/surf-content-creator-core" />
-            <option value="$PROJECT_DIR$/surf-content-creator-velocity" />
+            <option value="$PROJECT_DIR$/surf-content-creator-paper" />
           </set>
         </option>
       </GradleProjectSettings>
