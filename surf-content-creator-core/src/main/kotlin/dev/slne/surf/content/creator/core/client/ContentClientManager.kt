@@ -1,7 +1,7 @@
 package dev.slne.surf.content.creator.core.client
 
 import dev.slne.surf.content.creator.api.ContentCreator
-import dev.slne.surf.content.creator.core.service.contentCreatorService
+import dev.slne.surf.content.creator.core.service.ContentCreatorService
 import it.unimi.dsi.fastutil.objects.ObjectSet
 import kotlinx.coroutines.CoroutineScope
 import java.util.*
@@ -22,12 +22,12 @@ object ContentClientManager {
 
     @JvmName("enableStreamEventListenerUUIDs")
     suspend fun enableStreamEventListener(uuids: ObjectSet<UUID>) {
-        val contentCreators = contentCreatorService.getContentCreators(uuids)
+        val contentCreators = ContentCreatorService.getContentCreators(uuids)
         enableStreamEventListener(contentCreators)
     }
 
     suspend fun enableStreamEventListener(uuid: UUID) {
-        val contentCreator = contentCreatorService.getContentCreator(uuid) ?: return
+        val contentCreator = ContentCreatorService.getContentCreator(uuid) ?: return
         enableStreamEventListener(contentCreator)
     }
 
@@ -42,7 +42,7 @@ object ContentClientManager {
 
     @JvmName("disableStreamEventListenerUUIDs")
     suspend fun disableStreamEventListener(uuids: ObjectSet<UUID>) {
-        val contentCreators = contentCreatorService.getContentCreators(uuids)
+        val contentCreators = ContentCreatorService.getContentCreators(uuids)
         disableStreamEventListener(contentCreators)
     }
 
@@ -52,7 +52,7 @@ object ContentClientManager {
     }
 
     suspend fun disableStreamEventListener(uuid: UUID) {
-        val contentCreator = contentCreatorService.getContentCreator(uuid) ?: return
+        val contentCreator = ContentCreatorService.getContentCreator(uuid) ?: return
         disableStreamEventListener(contentCreator)
     }
 

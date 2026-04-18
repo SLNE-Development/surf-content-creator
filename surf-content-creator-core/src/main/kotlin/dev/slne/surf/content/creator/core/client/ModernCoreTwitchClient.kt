@@ -6,17 +6,15 @@ import com.github.twitch4j.events.ChannelGoLiveEvent
 import com.github.twitch4j.events.ChannelGoOfflineEvent
 import com.github.twitch4j.helix.domain.Stream
 import com.netflix.hystrix.exception.HystrixRuntimeException
+import dev.slne.surf.api.core.util.toObjectList
 import dev.slne.surf.content.creator.api.ContentCreator
 import dev.slne.surf.content.creator.api.platform.PlatformType
 import dev.slne.surf.content.creator.core.config.config
-import dev.slne.surf.content.creator.core.service.contentCreatorService
-import dev.slne.surf.surfapi.core.api.util.toObjectList
+import dev.slne.surf.content.creator.core.service.ContentCreatorService
 import it.unimi.dsi.fastutil.objects.ObjectSet
-import kotlinx.coroutines.*
-import java.time.Instant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import kotlin.system.measureTimeMillis
-import kotlin.time.Duration.Companion.seconds
-import kotlin.time.toJavaDuration
 
 object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
     private const val BATCH_SIZE = 100
@@ -35,36 +33,17 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
             .log("Fetching streams for all content creators. This may take a while...")
 
         val duration = measureTimeMillis {
-            updateStreamers(contentCreatorService.contentCreators)
+            updateStreamers(ContentCreatorService.contentCreators)
         }
 
         log.atInfo()
             .log("Fetched streams in ${duration}ms")
-
-        pluginScope.launch { runUpdateTask() }
     }
 
     override fun registerStateChangeListener() {
         with(twitchClient.eventManager) {
             onEvent(ChannelGoLiveEvent::class.java) { channelGoLive(it.channel.name) }
             onEvent(ChannelGoOfflineEvent::class.java) { channelGoOffline(it.channel.name) }
-        }
-    }
-
-    private suspend fun runUpdateTask() = coroutineScope {
-        while (isActive) {
-            val refreshInterval = config.twitch.refreshIntervalSeconds.seconds
-            delay(refreshInterval)
-
-            val duration = measureTimeMillis {
-                val updatedCreators = contentCreatorService.refreshContentCreators(
-                    Instant.now().minus(refreshInterval.toJavaDuration())
-                )
-                updateStreamers(updatedCreators)
-            }
-
-            log.atInfo()
-                .log("Refreshed streams in ${duration}ms")
         }
     }
 

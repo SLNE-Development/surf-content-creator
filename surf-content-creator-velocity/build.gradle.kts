@@ -1,19 +1,14 @@
 plugins {
-    id("dev.slne.surf.surfapi.gradle.velocity")
+    id("dev.slne.surf.api.gradle.paper-plugin")
 }
 
 dependencies {
     api(project(":surf-content-creator-core"))
-    api(project(":surf-content-creator-fallback"))
 }
 
-velocityPluginFile {
-    main = "dev.slne.surf.content.creator.velocity.VelocityContentCreatorPlugin"
+surfPaperPluginApi  {
+    mainClass("dev.slne.surf.content.creator.paper.PaperMain")
+    generateLibraryLoader(false)
 
-    authors = listOf("Ammo", "red")
-
-    pluginDependencies {
-        register("commandapi")
-        register("miniplaceholders")
-    }
+    authors.addAll("twisti", "red")
 }

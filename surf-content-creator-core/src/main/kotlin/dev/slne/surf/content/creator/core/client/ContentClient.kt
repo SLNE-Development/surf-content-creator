@@ -1,12 +1,12 @@
 package dev.slne.surf.content.creator.core.client
 
 import com.github.twitch4j.helix.domain.Stream
+import dev.slne.surf.api.core.util.logger
 import dev.slne.surf.content.creator.api.ContentCreator
 import dev.slne.surf.content.creator.api.platform.PlatformState
 import dev.slne.surf.content.creator.api.platform.PlatformType
 import dev.slne.surf.content.creator.core.ContentCreatorInstance
-import dev.slne.surf.content.creator.core.service.contentCreatorService
-import dev.slne.surf.surfapi.core.api.util.logger
+import dev.slne.surf.content.creator.core.service.ContentCreatorService
 import it.unimi.dsi.fastutil.objects.ObjectSet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,6 @@ import kotlinx.coroutines.withContext
 import java.io.Closeable
 
 abstract class ContentClient(private val platformType: PlatformType) : Closeable {
-
     protected val log = logger()
 
     abstract suspend fun build(pluginScope: CoroutineScope)
@@ -25,7 +24,7 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
     abstract suspend fun disableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>)
 
     protected fun channelGoLive(channelName: String) {
-        val platform = contentCreatorService.contentCreators
+        val platform = ContentCreatorService.contentCreators
             .mapNotNull { it.getPlatform(platformType) }
             .find { it.name.equals(channelName, ignoreCase = true) }
 
@@ -40,7 +39,7 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
     }
 
     protected fun channelGoOffline(channelName: String) {
-        val platform = contentCreatorService.contentCreators
+        val platform = ContentCreatorService.contentCreators
             .mapNotNull { it.getPlatform(platformType) }
             .find { it.name.equals(channelName, ignoreCase = true) }
 

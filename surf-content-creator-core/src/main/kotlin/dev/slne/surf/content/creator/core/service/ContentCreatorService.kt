@@ -1,44 +1,32 @@
 package dev.slne.surf.content.creator.core.service
 
+import com.github.benmanes.caffeine.cache.Caffeine
+import dev.slne.surf.api.core.util.mutableObjectSetOf
+import dev.slne.surf.api.core.util.toObjectSet
 import dev.slne.surf.content.creator.api.ContentCreator
-import dev.slne.surf.surfapi.core.api.util.requiredService
+import dev.slne.surf.content.creator.core.CoreContentCreator
+import dev.slne.surf.social.api.SurfSocialApi
+import dev.slne.surf.social.api.connection.impl.TwitchConnection
+import dev.slne.surf.social.api.findConnection
 import it.unimi.dsi.fastutil.objects.ObjectSet
-import java.time.Instant
-import java.util.UUID
+import java.util.*
 
-interface ContentCreatorService {
+object ContentCreatorService {
+    private val coreCreators = Caffeine.newBuilder().build<UUID, CoreContentCreator>()
+    val contentCreators get() = coreCreators.asMap().values.toObjectSet<ContentCreator>()
 
-    /**
-     * The content creators.
-     */
-    val contentCreators: ObjectSet<ContentCreator>
-
-    /**
-     * Fetches all content creators from the database.
-     *
-     * @return The content creators.
-     */
-    suspend fun fetchContentCreators(): ObjectSet<ContentCreator>
-
-    /**
-     * Refreshes the content creators from the database since the given time.
-     *
-     * @param since The time since the content creators should be refreshed.
-     * @return The new content creators.
-     */
-    suspend fun refreshContentCreators(since: Instant): ObjectSet<out ContentCreator>
-
-    fun getContentCreator(uuid: UUID): ContentCreator?
-    fun getContentCreators(uuids: ObjectSet<UUID>): ObjectSet<ContentCreator>
-
-    companion object {
-        val INSTANCE = requiredService<ContentCreatorService>()
+    suspend fun cacheCreator(playerUuid: UUID) = SurfSocialApi.findConnection<TwitchConnection>(playerUuid)?.let {
+        coreCreators.put(playerUuid, CoreContentCreator(playerUuid).also { c ->
+            c.twitchName = it.twitchName
+        })
     }
-}
 
-/**
- * Get the [ContentCreatorService] instance.
- *
- * @return The [ContentCreatorService] instance.
- */
-val contentCreatorService: ContentCreatorService get() = ContentCreatorService.INSTANCE
+    fun invalidate(playerUuid: UUID) {
+        coreCreators.invalidate(playerUuid)
+    }
+
+    fun getContentCreator(uuid: UUID): ContentCreator? = coreCreators.getIfPresent(uuid)
+    fun getContentCreators(uuids: ObjectSet<UUID>): ObjectSet<ContentCreator> = uuids.mapNotNullTo(
+        mutableObjectSetOf()
+    ) { getContentCreator(it) }
+}

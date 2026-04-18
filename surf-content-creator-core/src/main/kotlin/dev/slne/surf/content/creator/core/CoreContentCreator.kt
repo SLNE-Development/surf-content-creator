@@ -14,14 +14,15 @@ data class CoreContentCreator(
         .build<PlatformType, ContentCreatorPlatform?> {
             when(it) {
                 PlatformType.TWITCH -> twitchName?.let { PlatformType.TWITCH.toPlattform(it.lowercase()) }
-                else -> null
             }
         }
 
     var twitchName: String? = null
         set(value) {
             field = value
-            platforms.put(PlatformType.TWITCH, value?.let { PlatformType.TWITCH.toPlattform(it.lowercase()) })
+            if(value != null) {
+                platforms.put(PlatformType.TWITCH, value.let { PlatformType.TWITCH.toPlattform(it.lowercase()) })
+            }
         }
 
 

@@ -4,20 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="24abc730-e438-4fd8-bd86-5c469a5eb2d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/surf-content-creator-placeholder/build.gradle.kts" afterDir="false" />
+    <list default="true" id="24abc730-e438-4fd8-bd86-5c469a5eb2d4" name="Changes" comment="feat: starting cleanup">
+      <change afterPath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/paper/api/PaperContentCreatorApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/paper/listener/PlayerConnectionListener.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-api/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-api/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-api/src/main/kotlin/dev/slne/surf/content/creator/api/ContentCreatorApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-api/src/main/kotlin/dev/slne/surf/content/creator/api/ContentCreatorApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-api/src/main/kotlin/dev/slne/surf/content/creator/api/platform/PlatformType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-api/src/main/kotlin/dev/slne/surf/content/creator/api/platform/PlatformType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/ContentCreatorInstance.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/ContentCreatorInstance.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/CoreContentCreator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/CoreContentCreator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ContentClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ContentClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ContentClientManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ContentClientManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ModernCoreTwitchClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/client/ModernCoreTwitchClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/config/ContentCreatorConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/config/ContentCreatorConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/service/ContentCreatorService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-core/src/main/kotlin/dev/slne/surf/content/creator/core/service/ContentCreatorService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-fallback/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-fallback/src/main/kotlin/dev/slne/surf/content/creator/fallback/FallbackContentCreator.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-fallback/src/main/kotlin/dev/slne/surf/content/creator/fallback/FallbackContentCreatorService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-fallback/src/main/kotlin/dev/slne/surf/content/creator/fallback/FallbackContentCreatorTable.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-placeholder/build.gradle.kts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-velocity/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/VelocityContentCreatorPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/VelocityContentCreatorPlugin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/PlaceholderManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/VelocityContentCreatorApi.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/VelocityContentCreatorPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/paper/PaperMain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surf-content-creator-velocity/src/main/kotlin/dev/slne/surf/content/creator/velocity/content-creator-utils.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +50,13 @@
   <component name="ComposerSettings">
     <execution />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_E:/plugins/surf-content-creator-new" value="2umFtJMVTSmFqdECUHuqVCnETyc" />
+    </persistenceIdMap>
+  </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+    <option name="cachedIndexableFilesCount" value="56" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -69,7 +94,7 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="surf-content-creator" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="shadow" type="c8890929:TasksNode$1" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -92,7 +117,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="version/1.21.11" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -103,13 +128,17 @@
     &quot;assignee&quot;: &quot;twisti-dev&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/SLNE-Development/surf-content-creator.git",
-    "accountId": "3ea30738-4a93-447e-90f4-033bfb808414"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SLNE-Development/surf-content-creator.git&quot;,
+    &quot;accountId&quot;: &quot;3ea30738-4a93-447e-90f4-033bfb808414&quot;
   }
-}]]></component>
+}</component>
   <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="C:\Users\bjoer\.gradle\wrapper\dists\gradle-8.14.3-bin\cv11ve7ro1n3o1j4so8xd9n66\gradle-8.14.3" javaHome="C:\Users\bjoer\.gradle\jdks\eclipse_adoptium-21-amd64-windows.2" gradleVersion="8.14.3" />
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
@@ -127,16 +156,21 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Download Sources.executor": "Run",
+    "Gradle.Upgrade Gradle wrapper.executor": "Run",
     "Gradle.surf-content-creator [clean].executor": "Run",
     "Gradle.surf-content-creator:surf-content-creator-velocity [clean].executor": "Run",
     "Gradle.surf-content-creator:surf-content-creator-velocity [shadowJar].executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "version/1.21.11",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "version/26.1",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "S:/Workspace/surf-content-creator",
+    "last_opened_file_path": "E:/plugins/surf-content-creator-new",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
     "node.js.detected.package.tslint": "true",
@@ -147,7 +181,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "settings.editor.selected.configurable": "project.kotlinCompiler",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   },
@@ -169,10 +203,12 @@
       <recent name="dev.slne.surf.content.creator.api" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="dev.slne.surf.content.creator.velocity.util" />
+      <recent name="dev.slne.surf.content.creator.velocity.api" />
       <recent name="dev.slne.surf.content.creator.velocity" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.surf-content-creator:surf-content-creator-velocity [shadowJar]">
+  <component name="RunManager" selected="Gradle.surf-content-creator [clean]">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="surf-content-creator" />
       <option name="ENV_FILES" value="" />
@@ -371,8 +407,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.surf-content-creator:surf-content-creator-velocity [shadowJar]" />
         <item itemvalue="Gradle.surf-content-creator [clean]" />
+        <item itemvalue="Gradle.surf-content-creator:surf-content-creator-velocity [shadowJar]" />
         <item itemvalue="Gradle.surf-content-creator:surf-content-creator-velocity [clean]" />
       </list>
     </recent_temporary>
@@ -380,7 +416,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
       </set>
     </attachedChunks>
   </component>
@@ -402,10 +438,23 @@
       <workItem from="1743950472765" duration="1677000" />
       <workItem from="1755036919977" duration="1298000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: starting cleanup">
+      <option name="closed" value="true" />
+      <created>1766660832343</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1766660832343</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: starting cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: starting cleanup" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
