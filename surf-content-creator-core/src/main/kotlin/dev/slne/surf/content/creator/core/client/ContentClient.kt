@@ -27,13 +27,7 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
         val contentCreator = ContentCreatorService.contentCreators.find { creator ->
             creator.getPlatform(platformType)?.name.equals(channelName, ignoreCase = true)
         }
-        val platform = contentCreator?.getPlatform(platformType)
-
-        if (platform == null) {
-            log.atWarning()
-                .log("Channel $channelName went live but is not registered or $platformType data is missing.")
-            return
-        }
+        val platform = contentCreator?.getPlatform(platformType) ?: return
 
         ContentCreatorInstance.callOnStateChangeListener(contentCreator.minecraftUuid, platform, PlatformState.ONLINE)
         platform.state = PlatformState.ONLINE
@@ -43,13 +37,8 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
         val contentCreator = ContentCreatorService.contentCreators.find { creator ->
             creator.getPlatform(platformType)?.name.equals(channelName, ignoreCase = true)
         }
-        val platform = contentCreator?.getPlatform(platformType)
 
-        if (platform == null) {
-            log.atWarning()
-                .log("Channel $channelName went offline but is not registered or $platformType data is missing.")
-            return
-        }
+        val platform = contentCreator?.getPlatform(platformType) ?: return
 
         ContentCreatorInstance.callOnStateChangeListener(contentCreator.minecraftUuid, platform, PlatformState.OFFLINE)
         platform.state = PlatformState.OFFLINE
