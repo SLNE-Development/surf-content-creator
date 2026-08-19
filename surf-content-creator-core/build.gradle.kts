@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
     api(project(":surf-content-creator-api"))
-    api(libs.kaml)
     api(libs.twitch4j)
     compileOnly("dev.slne.surf.social:surf-social-api:+")
 }
