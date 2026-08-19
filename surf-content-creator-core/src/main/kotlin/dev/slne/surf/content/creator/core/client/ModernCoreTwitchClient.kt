@@ -18,7 +18,6 @@ import kotlin.system.measureTimeMillis
 
 object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
     private const val BATCH_SIZE = 100
-    private val VALID_TWITCH_NAME_REGEX = "^[a-zA-Z0-9_]{4,25}$".toRegex()
 
     private lateinit var twitchClient: TwitchClient
 
@@ -116,8 +115,7 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
     override suspend fun buildStreamMap(contentCreators: ObjectSet<out ContentCreator>): Map<String, Stream> {
         val creatorList = contentCreators.toObjectList()
         val allNames = creatorList.mapNotNull { it.getPlatform(PlatformType.TWITCH)?.name }
-        val validNames = allNames.filter { it.matches(VALID_TWITCH_NAME_REGEX) }
-        val invalidNames = allNames - validNames.toSet()
+        val (validNames, invalidNames) = partitionTwitchNames(allNames)
 
         if (invalidNames.isNotEmpty()) {
             log.atWarning()

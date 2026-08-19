@@ -23,3 +23,8 @@ val config by lazy {
         "config.yml"
     )
 }
+
+/**
+ * Loads the plugin configuration from disk and returns it.
+ */
+fun loadContentCreatorConfig(): ContentCreatorConfig = config

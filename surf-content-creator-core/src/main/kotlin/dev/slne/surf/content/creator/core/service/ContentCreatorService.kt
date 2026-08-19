@@ -6,6 +6,7 @@ import dev.slne.surf.api.core.util.toObjectSet
 import dev.slne.surf.content.creator.api.ContentCreator
 import dev.slne.surf.content.creator.api.platform.PlatformState
 import dev.slne.surf.content.creator.api.platform.PlatformType
+import dev.slne.surf.content.creator.core.ContentCreatorInstance
 import dev.slne.surf.content.creator.core.CoreContentCreator
 import dev.slne.surf.content.creator.core.client.ModernCoreTwitchClient
 import dev.slne.surf.social.api.SurfSocialApi
@@ -32,6 +33,25 @@ object ContentCreatorService {
 
     fun invalidate(playerUuid: UUID) {
         coreCreators.invalidate(playerUuid)
+    }
+
+    /**
+     * Forces the state of the [platformType] platform of the content creator behind [playerUuid] to
+     * [newState] and notifies every registered state change listener.
+     *
+     * @return `false` if that player is no known content creator or has no such platform
+     */
+    fun updatePlatformState(
+        playerUuid: UUID,
+        platformType: PlatformType,
+        newState: PlatformState
+    ): Boolean {
+        val platform = getContentCreator(playerUuid)?.getPlatform(platformType) ?: return false
+
+        platform.state = newState
+        ContentCreatorInstance.callOnStateChangeListener(playerUuid, platform, newState)
+
+        return true
     }
 
     fun getContentCreator(uuid: UUID): ContentCreator? = coreCreators.getIfPresent(uuid)
