@@ -13,7 +13,7 @@ import dev.slne.surf.content.creator.api.platform.PlatformType
 data class ContentCreatorPlatform(
     val name: String,
     val plattform: PlatformType,
-    var state: PlatformState = PlatformState.UNKNOWN
+    @Volatile var state: PlatformState = PlatformState.UNKNOWN
 )
 
 fun PlatformType.toPlattform(name: String, state: PlatformState = PlatformState.UNKNOWN): ContentCreatorPlatform =

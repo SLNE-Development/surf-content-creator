@@ -1,6 +1,5 @@
 package dev.slne.surf.content.creator.core
 
-import com.github.benmanes.caffeine.cache.Caffeine
 import dev.slne.surf.content.creator.api.ContentCreator
 import dev.slne.surf.content.creator.api.ContentCreatorPlatform
 import dev.slne.surf.content.creator.api.platform.PlatformType
@@ -10,23 +9,20 @@ import java.util.*
 data class CoreContentCreator(
     override val minecraftUuid: UUID,
 ) : ContentCreator {
-    private val platforms = Caffeine.newBuilder()
-        .build<PlatformType, ContentCreatorPlatform?> {
-            when(it) {
-                PlatformType.TWITCH -> twitchName?.let { PlatformType.TWITCH.toPlattform(it.lowercase()) }
-            }
-        }
 
+    @Volatile
+    private var twitchPlatform: ContentCreatorPlatform? = null
+
+    @Volatile
     var twitchName: String? = null
         set(value) {
+            twitchPlatform = value?.let { PlatformType.TWITCH.toPlattform(it.lowercase()) }
             field = value
-            if(value != null) {
-                platforms.put(PlatformType.TWITCH, value.let { PlatformType.TWITCH.toPlattform(it.lowercase()) })
-            }
         }
 
-
-    override fun getPlatform(type: PlatformType): ContentCreatorPlatform? = platforms.get(type)
+    override fun getPlatform(type: PlatformType): ContentCreatorPlatform? = when (type) {
+        PlatformType.TWITCH -> twitchPlatform
+    }
 
     override fun toString(): String {
         return "CoreContentCreator(minecraftUuid=$minecraftUuid, twitchName=$twitchName)"

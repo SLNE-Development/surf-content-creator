@@ -12,18 +12,22 @@ import org.bukkit.event.player.PlayerQuitEvent
 object PlayerConnectionListener : Listener {
     @EventHandler
     fun onConnect(event: PlayerJoinEvent) {
+        val playerUuid = event.player.uniqueId
+
+        ContentCreatorService.beginSession(playerUuid)
+
         plugin.launch {
-            ContentCreatorService.cacheCreator(event.player.uniqueId)
-            ContentClientManager.enableStreamEventListener(event.player.uniqueId)
+            ContentCreatorService.cacheCreator(playerUuid)
+            ContentClientManager.enableStreamEventListener(playerUuid)
         }
     }
 
     @EventHandler
     fun onDisconnect(event: PlayerQuitEvent) {
-        ContentCreatorService.invalidate(event.player.uniqueId)
+        val creator = ContentCreatorService.endSession(event.player.uniqueId) ?: return
 
         plugin.launch {
-            ContentClientManager.disableStreamEventListener(event.player.uniqueId)
+            ContentClientManager.disableStreamEventListener(creator)
         }
     }
 }

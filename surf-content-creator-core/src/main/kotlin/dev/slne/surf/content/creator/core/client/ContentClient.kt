@@ -8,6 +8,7 @@ import dev.slne.surf.content.creator.api.platform.PlatformType
 import dev.slne.surf.content.creator.core.ContentCreatorInstance
 import dev.slne.surf.content.creator.core.service.ContentCreatorService
 import it.unimi.dsi.fastutil.objects.ObjectSet
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,6 +17,12 @@ import java.io.Closeable
 abstract class ContentClient(private val platformType: PlatformType) : Closeable {
     protected val log = logger()
 
+    /**
+     * The dispatcher every blocking platform call of this client runs on. Subclasses override it to
+     * bound how much of the shared IO dispatcher they are allowed to occupy.
+     */
+    protected open val ioDispatcher: CoroutineDispatcher get() = Dispatchers.IO
+
     abstract suspend fun build(pluginScope: CoroutineScope)
     abstract fun registerStateChangeListener()
     abstract suspend fun enableStreamEventListener(contentCreator: ContentCreator)
@@ -23,25 +30,22 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
     abstract suspend fun disableStreamEventListener(contentCreator: ContentCreator)
     abstract suspend fun disableStreamEventListener(contentCreators: ObjectSet<out ContentCreator>)
 
-    fun channelGoLive(channelName: String) {
-        val contentCreator = ContentCreatorService.contentCreators.find { creator ->
-            creator.getPlatform(platformType)?.name.equals(channelName, ignoreCase = true)
-        }
-        val platform = contentCreator?.getPlatform(platformType) ?: return
+    fun channelGoLive(channelName: String) = changeChannelState(channelName, PlatformState.ONLINE)
 
-        ContentCreatorInstance.callOnStateChangeListener(contentCreator.minecraftUuid, platform, PlatformState.ONLINE)
-        platform.state = PlatformState.ONLINE
-    }
+    protected fun channelGoOffline(channelName: String) =
+        changeChannelState(channelName, PlatformState.OFFLINE)
 
-    protected fun channelGoOffline(channelName: String) {
-        val contentCreator = ContentCreatorService.contentCreators.find { creator ->
-            creator.getPlatform(platformType)?.name.equals(channelName, ignoreCase = true)
-        }
+    private fun changeChannelState(channelName: String, newState: PlatformState) {
+        val contentCreator =
+            ContentCreatorService.findByPlatformName(platformType, channelName) ?: return
+        val platform = contentCreator.getPlatform(platformType) ?: return
 
-        val platform = contentCreator?.getPlatform(platformType) ?: return
-
-        ContentCreatorInstance.callOnStateChangeListener(contentCreator.minecraftUuid, platform, PlatformState.OFFLINE)
-        platform.state = PlatformState.OFFLINE
+        platform.state = newState
+        ContentCreatorInstance.callOnStateChangeListener(
+            contentCreator.minecraftUuid,
+            platform,
+            newState
+        )
     }
 
     override fun close() {
@@ -49,7 +53,7 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
     }
 
     protected open suspend fun updateStreamers(contentCreators: ObjectSet<out ContentCreator>) =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             val streamMap = buildStreamMap(contentCreators)
             contentCreators.forEach { creator ->
                 val platform = creator.getPlatform(platformType)

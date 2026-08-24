@@ -21,6 +21,8 @@ class PlayerConnectionListener : EventRegistrar {
 
             val playerUuid = event.player.uuid
 
+            ContentCreatorService.beginSession(playerUuid)
+
             minestomAsyncScope.launch {
                 ContentCreatorService.cacheCreator(playerUuid)
                 ContentClientManager.enableStreamEventListener(playerUuid)
@@ -28,12 +30,10 @@ class PlayerConnectionListener : EventRegistrar {
         }
 
         node.addListener<PlayerDisconnectEvent> { event ->
-            val playerUuid = event.player.uuid
-
-            ContentCreatorService.invalidate(playerUuid)
+            val creator = ContentCreatorService.endSession(event.player.uuid) ?: return@addListener
 
             minestomAsyncScope.launch {
-                ContentClientManager.disableStreamEventListener(playerUuid)
+                ContentClientManager.disableStreamEventListener(creator)
             }
         }
     }

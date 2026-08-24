@@ -1,14 +1,14 @@
 package dev.slne.surf.content.creator.core
 
-import dev.slne.surf.api.core.util.mutableObjectSetOf
 import dev.slne.surf.content.creator.api.ContentCreatorPlatform
 import dev.slne.surf.content.creator.api.listener.StateChangeListener
 import dev.slne.surf.content.creator.api.platform.PlatformState
 import java.util.*
+import java.util.concurrent.CopyOnWriteArraySet
 
 object ContentCreatorInstance {
 
-    private val stateChangeListeners = mutableObjectSetOf<StateChangeListener>()
+    private val stateChangeListeners = CopyOnWriteArraySet<StateChangeListener>()
 
     fun registerStateChangeListener(listener: StateChangeListener) {
         stateChangeListeners.add(listener)

@@ -21,26 +21,28 @@ object LiveTagRenderer {
      * @param space whether the tag is prefixed with a space
      */
     fun render(playerUuid: UUID, space: Boolean): Component {
-        val creator =
-            ContentCreatorService.contentCreators.find { it.minecraftUuid == playerUuid }
-                ?: return Component.empty()
+        val creator = ContentCreatorService.getContentCreator(playerUuid) ?: return Component.empty()
 
         val live = PlatformType.entries
-            .map { creator.getPlatform(it) }
-            .any { it?.state == PlatformState.ONLINE }
+            .any { creator.getPlatform(it)?.state == PlatformState.ONLINE }
 
-        return renderTag(live, space, miniMessage.deserialize(config.liveTag))
+        if (!live) {
+            return Component.empty()
+        }
+
+        return renderTag(true, space, miniMessage.deserialize(config.liveTag))
     }
 
-    internal fun renderTag(live: Boolean, space: Boolean, liveTag: Component): Component =
-        buildText {
-            if (live) {
-                if (space) {
-                    appendSpace()
-                }
-                append(liveTag)
-            } else {
-                Component.empty()
-            }
+    internal fun renderTag(live: Boolean, space: Boolean, liveTag: Component): Component {
+        if (!live) {
+            return Component.empty()
         }
+
+        return buildText {
+            if (space) {
+                appendSpace()
+            }
+            append(liveTag)
+        }
+    }
 }

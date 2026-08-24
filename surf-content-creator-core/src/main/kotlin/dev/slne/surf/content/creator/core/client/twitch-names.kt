@@ -11,9 +11,9 @@ internal fun isValidTwitchName(name: String) = name.matches(VALID_TWITCH_NAME_RE
  * Splits [names] into the ones that can be a twitch login name and the ones that cannot.
  */
 internal fun partitionTwitchNames(names: List<String>): TwitchNamePartition {
-    val valid = names.filter { isValidTwitchName(it) }
+    val (valid, invalid) = names.partition { isValidTwitchName(it) }
 
-    return TwitchNamePartition(valid, names - valid.toSet())
+    return TwitchNamePartition(valid, invalid)
 }
 
 internal data class TwitchNamePartition(val valid: List<String>, val invalid: List<String>)
