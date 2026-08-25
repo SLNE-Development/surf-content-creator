@@ -7,3 +7,8 @@ dependencies {
     api(libs.twitch4j)
     compileOnly("dev.slne.surf.social:surf-social-api:+")
 }
+
+sourceSets.test {
+    compileClasspath += sourceSets.main.get().compileClasspath
+    runtimeClasspath += sourceSets.main.get().compileClasspath
+}
