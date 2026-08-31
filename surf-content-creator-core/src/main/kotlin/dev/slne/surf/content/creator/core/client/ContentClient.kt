@@ -2,6 +2,7 @@ package dev.slne.surf.content.creator.core.client
 
 import com.github.twitch4j.helix.domain.Stream
 import dev.slne.surf.api.core.util.logger
+import dev.slne.surf.api.core.util.runAtFixedRate
 import dev.slne.surf.content.creator.api.ContentCreator
 import dev.slne.surf.content.creator.api.ContentCreatorPlatform
 import dev.slne.surf.content.creator.api.platform.PlatformState
@@ -83,19 +84,15 @@ abstract class ContentClient(private val platformType: PlatformType) : Closeable
         }
 
         val interval = intervalSeconds.seconds
-        refreshJob = pluginScope.launch {
-            while (isActive) {
-                delay(interval)
-
-                try {
-                    updateStreamers(ContentCreatorService.contentCreators)
-                } catch (e: CancellationException) {
-                    throw e
-                } catch (e: Exception) {
-                    log.atWarning()
-                        .withCause(e)
-                        .log("Failed to refresh live states. Retrying in ${intervalSeconds}s.")
-                }
+        refreshJob = pluginScope.runAtFixedRate(interval) {
+            try {
+                updateStreamers(ContentCreatorService.contentCreators)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                log.atWarning()
+                    .withCause(e)
+                    .log("Failed to refresh live states. Retrying in ${intervalSeconds}s.")
             }
         }
     }
