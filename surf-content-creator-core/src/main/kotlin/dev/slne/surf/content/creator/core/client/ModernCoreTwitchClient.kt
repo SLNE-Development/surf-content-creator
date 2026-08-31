@@ -13,13 +13,17 @@ import dev.slne.surf.content.creator.core.service.ContentCreatorService
 import it.unimi.dsi.fastutil.objects.ObjectSet
 import kotlinx.coroutines.*
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.Executors
 import kotlin.system.measureTimeMillis
+import kotlin.time.Duration.Companion.milliseconds
 
 object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
     private const val BATCH_SIZE = 100
 
     private const val REQUEST_PARALLELISM = 8
+
+    private const val MAX_FETCH_ATTEMPTS = 3
+
+    private const val RETRY_BASE_DELAY_MILLIS = 500L
 
     @Volatile
     private lateinit var twitchClient: TwitchClient
@@ -49,8 +53,26 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
 
     override fun registerStateChangeListener() {
         with(twitchClient.eventManager) {
-            onEvent(ChannelGoLiveEvent::class.java) { channelGoLive(it.channel.name) }
-            onEvent(ChannelGoOfflineEvent::class.java) { channelGoOffline(it.channel.name) }
+            onEvent(ChannelGoLiveEvent::class.java) { event ->
+                handleChannelEvent("go live", event.channel.name) { channelGoLive(it) }
+            }
+            onEvent(ChannelGoOfflineEvent::class.java) { event ->
+                handleChannelEvent("go offline", event.channel.name) { channelGoOffline(it) }
+            }
+        }
+    }
+
+    private inline fun handleChannelEvent(
+        eventName: String,
+        channelName: String,
+        handle: (String) -> Unit
+    ) {
+        try {
+            handle(channelName)
+        } catch (e: Exception) {
+            log.atWarning()
+                .withCause(e)
+                .log("Failed to handle $eventName event for channel: $channelName")
         }
     }
 
@@ -58,6 +80,12 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
         val channelName = contentCreator.getPlatform(PlatformType.TWITCH)?.name ?: return
 
         withContext(ioDispatcher) {
+            if (!ContentCreatorService.isSessionActive(contentCreator.minecraftUuid)) {
+                return@withContext
+            }
+
+            updateStreamers(ObjectSet.of(contentCreator))
+
             val user = try {
                 twitchClient.clientHelper.enableStreamEventListener(channelName)
             } catch (e: HystrixRuntimeException) {
@@ -77,10 +105,7 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
 
             if (!ContentCreatorService.isSessionActive(contentCreator.minecraftUuid)) {
                 disableChannel(channelName)
-                return@withContext
             }
-
-            updateStreamers(ObjectSet.of(contentCreator))
         }
     }
 
@@ -92,7 +117,24 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
         }
 
         withContext(ioDispatcher) {
-            val successUser = twitchClient.clientHelper.enableStreamEventListener(channelNames)
+            updateStreamers(contentCreators)
+
+            if (channelNames.isEmpty()) {
+                return@withContext
+            }
+
+            val successUser = try {
+                twitchClient.clientHelper.enableStreamEventListener(channelNames)
+            } catch (e: Exception) {
+                log.atWarning()
+                    .withCause(e)
+                    .log(
+                        "Failed to enable stream event listeners for ${channelNames.size} channels. " +
+                                "Their live state is still kept up to date by the periodic reconciliation."
+                    )
+                return@withContext
+            }
+
             successUser.forEach { twitchUserIds[it.login] = it.id }
 
             val failedChannelNames = channelNames - successUser.map { it.login }.toSet()
@@ -100,8 +142,6 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
                 log.atWarning()
                     .log("Failed to enable stream event listener for channels: $failedChannelNames")
             }
-
-            updateStreamers(contentCreators)
         }
     }
 
@@ -161,7 +201,7 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
         }
     }
 
-    override suspend fun buildStreamMap(contentCreators: ObjectSet<out ContentCreator>): Map<String, Stream> {
+    override suspend fun lookupStreams(contentCreators: ObjectSet<out ContentCreator>): StreamLookup {
         val allNames = contentCreators.mapNotNull { it.getPlatform(PlatformType.TWITCH)?.name }
         val (validNames, invalidNames) = partitionTwitchNames(allNames)
 
@@ -171,32 +211,71 @@ object ModernCoreTwitchClient : ContentClient(PlatformType.TWITCH) {
         }
 
         if (validNames.isEmpty()) {
-            return emptyMap()
+            return StreamLookup.EMPTY
         }
 
         val batches = validNames.chunked(BATCH_SIZE)
 
-        val batchedStreams = coroutineScope {
-            batches.map { batch -> async { fetchStreams(batch) } }.awaitAll()
+        val results = coroutineScope {
+            batches.map { batch -> async { batch to fetchStreams(batch) } }.awaitAll()
         }
 
         val streams = LinkedHashMap<String, Stream>()
-        for (batch in batchedStreams) {
-            for (stream in batch) {
-                streams[stream.userLogin] = stream
+        val checkedNames = HashSet<String>(validNames.size)
+
+        for ((batch, batchStreams) in results) {
+            if (batchStreams == null) {
+                continue
+            }
+
+            checkedNames += batch
+
+            for (stream in batchStreams) {
+                streams[stream.userLogin.lowercase()] = stream
             }
         }
 
-        return streams
+        return StreamLookup(streams, checkedNames)
     }
 
-    private fun fetchStreams(logins: List<String>): List<Stream> = twitchClient.helix
-        .getStreams(null, null, null, BATCH_SIZE, null, null, null, logins)
-        .execute()
-        .streams
+    private suspend fun fetchStreams(logins: List<String>): List<Stream>? {
+        var retryDelayMillis = RETRY_BASE_DELAY_MILLIS
+
+        repeat(MAX_FETCH_ATTEMPTS) { attempt ->
+            try {
+                return twitchClient.helix
+                    .getStreams(null, null, null, BATCH_SIZE, null, null, null, logins)
+                    .execute()
+                    .streams
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                log.atWarning()
+                    .withCause(e)
+                    .log(
+                        "Failed to fetch twitch streams for ${logins.size} channels " +
+                                "(attempt ${attempt + 1}/$MAX_FETCH_ATTEMPTS)."
+                    )
+
+                if (attempt == MAX_FETCH_ATTEMPTS - 1) {
+                    return null
+                }
+
+                delay(retryDelayMillis.milliseconds)
+                retryDelayMillis *= 2
+            }
+        }
+
+        return null
+    }
 
     override fun close() {
+        super.close()
+
         twitchUserIds.clear()
-        twitchClient.close()
+
+        if (::twitchClient.isInitialized) {
+            twitchClient.close()
+        }
     }
 }

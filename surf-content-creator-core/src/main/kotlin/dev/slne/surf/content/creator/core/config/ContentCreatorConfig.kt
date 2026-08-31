@@ -8,6 +8,9 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable
 @ConfigSerializable
 data class ContentCreatorConfig(
     val liveTag: String = "<red>●</red>",
+
+    val liveStateRefreshSeconds: Long = 60,
+
     val twitch: Twitch = Twitch(),
 ) {
     @ConfigSerializable
