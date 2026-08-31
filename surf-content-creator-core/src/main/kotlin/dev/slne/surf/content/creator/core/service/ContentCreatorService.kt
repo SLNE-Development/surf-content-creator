@@ -7,7 +7,6 @@ import dev.slne.surf.content.creator.api.platform.PlatformState
 import dev.slne.surf.content.creator.api.platform.PlatformType
 import dev.slne.surf.content.creator.core.ContentCreatorInstance
 import dev.slne.surf.content.creator.core.CoreContentCreator
-import dev.slne.surf.content.creator.core.client.ModernCoreTwitchClient
 import dev.slne.surf.social.api.SurfSocialApi
 import dev.slne.surf.social.api.connection.impl.TwitchConnection
 import dev.slne.surf.social.api.findConnection
@@ -48,14 +47,6 @@ object ContentCreatorService {
 
         if (playerUuid !in onlineSessions) {
             coreCreators.remove(playerUuid, creator)
-            return@let
-        }
-
-        for (type in PlatformType.entries) {
-            val platform = creator.getPlatform(type) ?: continue
-            if (platform.state == PlatformState.ONLINE) {
-                ModernCoreTwitchClient.channelGoLive(platform.name)
-            }
         }
     }
 
