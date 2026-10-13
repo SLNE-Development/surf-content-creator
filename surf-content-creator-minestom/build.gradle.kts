@@ -2,10 +2,6 @@ plugins {
     id("dev.slne.surf.api.gradle.minestom")
 }
 
-repositories {
-    mavenLocal()
-}
-
 minestomPluginFile {
     id = "surf-content-creator-minestom"
     main = "dev.slne.surf.content.creator.minestom.ContentCreatorMinestomPlugin"
