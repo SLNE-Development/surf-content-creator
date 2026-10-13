@@ -1,8 +1,8 @@
 package dev.slne.surf.content.creator.minestom.listener
 
-import dev.slne.minestom.lobby.api.coroutine.minestomAsyncScope
-import dev.slne.minestom.lobby.api.event.EventRegistrar
-import dev.slne.minestom.lobby.api.extension.addListener
+import dev.slne.surf.api.minestom.coroutine.minestomAsyncScope
+import dev.slne.surf.api.minestom.event.EventRegistrar
+import dev.slne.surf.api.minestom.extension.addListener
 import dev.slne.surf.content.creator.core.client.ContentClientManager
 import dev.slne.surf.content.creator.core.service.ContentCreatorService
 import kotlinx.coroutines.launch
@@ -11,7 +11,7 @@ import net.minestom.server.event.EventNode
 import net.minestom.server.event.player.PlayerDisconnectEvent
 import net.minestom.server.event.player.PlayerSpawnEvent
 
-class PlayerConnectionListener : EventRegistrar {
+object PlayerConnectionListener : EventRegistrar {
 
     override fun register(node: EventNode<Event>) {
         node.addListener<PlayerSpawnEvent> { event ->

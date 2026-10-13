@@ -1,9 +1,9 @@
 package dev.slne.surf.content.creator.minestom.platform
 
 import com.google.auto.service.AutoService
-import dev.slne.minestom.lobby.api.coroutine.minestomAsyncScope
-import dev.slne.minestom.lobby.api.extension.ConnectionManager
 import dev.slne.surf.api.core.util.mutableObjectSetOf
+import dev.slne.surf.api.minestom.coroutine.minestomAsyncScope
+import dev.slne.surf.api.minestom.extension.ConnectionManager
 import dev.slne.surf.content.creator.core.platform.ContentCreatorPlatformBridge
 import it.unimi.dsi.fastutil.objects.ObjectSet
 import kotlinx.coroutines.CoroutineScope
